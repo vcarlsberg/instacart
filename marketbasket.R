@@ -3,17 +3,17 @@ library(dplyr)
 library(data.table)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:10000,]
+MyData<-MyData[1:20,]
 #iris_data<-data("iris")
 
 ddd<-unique(MyData$product_id)
-sort(ddd)
+ddd<-sort(ddd)
 
 #eee<-unique(MyData$order_id)
 #eee<-as.data.frame(as.matrix(eee))
 
-df <- data.frame(matrix(ncol = length(ddd)+1, nrow = 1))
-colnames(df) <- c("order_id",sort(ddd))
+#df <- data.frame(matrix(ncol = length(ddd)+1, nrow = 1))
+#colnames(df) <- c("order_id",sort(ddd))
 
 #df <- data.frame(matrix(ncol = 3, nrow = 0))
 #x <- c("name", "age", "gender")
@@ -28,33 +28,33 @@ colnames(df) <- c("order_id",sort(ddd))
 
 
 
-i <- c(1:50)
+#i <- c(1:50)
 
-for (val in i)
-{
+#for (val in i)
+#{
   
-}
+#}
        
-for (val in i)
-{
-  if(MyData[val,3]<MyData[val+1,3])
-  {
-    print("SameLine")
-  }
-  else
-  {
-    print("DifferentLine")
-  }
-}
+#for (val in i)
+#{
+#  if(MyData[val,3]<MyData[val+1,3])
+#  {
+#    print("SameLine")
+#  }
+#  else
+#  {
+#    print("DifferentLine")
+#  }
+#}
 
-bbb<-c(1,2,3,4)
-bbb<-append(bbb,5)
+#bbb<-c(1,2,3,4)
+#bbb<-append(bbb,5)
 
-MyData[MyData$order_id == 1]
-MyData[2,2]
+#MyData[MyData$order_id == 1]
+#MyData[2,2]
 
 #creating DF
-df <- data.frame(matrix(ncol = 39123+1, nrow = 3))
+df <- data.frame(matrix(ncol = length(ddd)+1, nrow = 1))
 colnames(df) <- c("order_id",sort(ddd))
 
 #init 'for'
@@ -64,7 +64,7 @@ counter<-0
 
 for (val in order_id)
 {
-  aaa<-MyData %>% filter(order_id == 1)
+  aaa<-MyData %>% filter(order_id == val)
   aaa_vec<-c(aaa$product_id)
   aaa_vec<-as.character(aaa_vec)
   counter<-counter+1
