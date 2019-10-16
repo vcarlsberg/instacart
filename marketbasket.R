@@ -3,11 +3,11 @@ library(dplyr)
 library(data.table)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:20,]
+MyData<-MyData[1:200000,]
 #iris_data<-data("iris")
 
-ddd<-unique(MyData$product_id)
-ddd<-sort(ddd)
+prod_id<-unique(MyData$product_id)
+prod_id<-sort(prod_id)
 
 #eee<-unique(MyData$order_id)
 #eee<-as.data.frame(as.matrix(eee))
@@ -54,15 +54,15 @@ ddd<-sort(ddd)
 #MyData[2,2]
 
 #creating DF
-df <- data.frame(matrix(ncol = length(ddd)+1, nrow = 1))
-colnames(df) <- c("order_id",sort(ddd))
+df <- data.frame(matrix(ncol = length(prod_id)+1, nrow = 1))
+colnames(df) <- c("order_id",sort(prod_id))
 
 #init 'for'
-order_id<-c(unique(MyData$order_id))
+ord_id<-c(unique(MyData$order_id))
 
 counter<-0
 
-for (val in order_id)
+for (val in ord_id)
 {
   aaa<-MyData %>% filter(order_id == val)
   aaa_vec<-c(aaa$product_id)
@@ -73,13 +73,13 @@ for (val in order_id)
 }
 
 
-aaa<-MyData %>% filter(order_id == 1)
-aaa_vec<-c(aaa$product_id)
-aaa_vec<-as.character(aaa_vec)
-df[1,aaa_vec]<-1
+#aaa<-MyData %>% filter(order_id == 1)
+#aaa_vec<-c(aaa$product_id)
+#aaa_vec<-as.character(aaa_vec)
+#df[1,aaa_vec]<-1
 
 
-ddd_vec<-c("1","2","3","4","5","7","8","9","10")
-df[1,ddd_vec]<-100
+#ddd_vec<-c("1","2","3","4","5","7","8","9","10")
+#df[1,ddd_vec]<-100
 
-df[4,4]<-9
+#df[4,4]<-9
