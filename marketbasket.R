@@ -5,13 +5,19 @@ library(rCBA)
 library(arules)
 library(arulesViz)
 library(datasets)
+library(sqldf)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
 MyData<-MyData[1:500,]
 #iris_data<-data("iris")
 
-prod_id<-unique(MyData$product_id)
+MyProducts<-read.csv("products.csv",sep=",")
+
+DataTable<-merge(MyData,MyProducts,by="product_id")
+
+prod_id<-unique(DataTable$product_name)
 prod_id<-sort(prod_id)
+prod_id<-as.character(prod_id)
 
 #eee<-unique(MyData$order_id)
 #eee<-as.data.frame(as.matrix(eee))
@@ -68,14 +74,15 @@ counter<-0
 
 for (val in ord_id)
 {
-  aaa<-MyData %>% filter(order_id == val)
-  aaa_vec<-c(aaa$product_id)
+  aaa<-DataTable %>% filter(order_id == val)
+  aaa_vec<-(aaa$product_name)
   aaa_vec<-as.character(aaa_vec)
   counter<-counter+1
   df[counter,aaa_vec]<-TRUE
   df[counter,1]<-val
+  
 }
-
+#df[1,c("Active Dry Yeast")]<-TRUE
 
 #aaa<-MyData %>% filter(order_id == 2)
 
