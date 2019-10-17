@@ -7,7 +7,7 @@ library(arulesViz)
 library(datasets)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:50,]
+MyData<-MyData[1:500,]
 #iris_data<-data("iris")
 
 prod_id<-unique(MyData$product_id)
@@ -72,7 +72,7 @@ for (val in ord_id)
   aaa_vec<-c(aaa$product_id)
   aaa_vec<-as.character(aaa_vec)
   counter<-counter+1
-  df[counter,aaa_vec]<-1
+  df[counter,aaa_vec]<-TRUE
   df[counter,1]<-val
 }
 
@@ -80,10 +80,16 @@ for (val in ord_id)
 #aaa<-MyData %>% filter(order_id == 2)
 
 xxxx<-df[,2:dim(df)[2]]
-xxxx[is.na(xxxx)] <- 0
+xxxx[is.na(xxxx)] <- FALSE
 xxxx<-as.matrix(xxxx)
+rules <- apriori(xxxx,
+                 parameter = list(supp = 0.5, conf = 0.9, target = "rules"))
+                 #, parameter = list(supp = 0.001, conf = 0.8))
 itemFrequencyPlot(xxxx,topN=20,type="absolute")
-rules <- apriori(xxxx)
+
+summary(rules)
+options(digits=2)
+inspect(rules[1:5])
 #, parameter = list(supp = 0.001, conf = 0.8))
 
 
