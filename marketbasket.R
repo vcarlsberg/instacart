@@ -8,7 +8,7 @@ library(datasets)
 library(sqldf)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:500,]
+MyData<-MyData[1:1000,]
 #iris_data<-data("iris")
 
 MyProducts<-read.csv("products.csv",sep=",")
@@ -88,15 +88,16 @@ for (val in ord_id)
 
 xxxx<-df[,2:dim(df)[2]]
 xxxx[is.na(xxxx)] <- FALSE
-xxxx<-as.matrix(xxxx)
-rules <- apriori(xxxx,
-                 parameter = list(supp = 0.5, conf = 0.9, target = "rules"))
+#xxxx<-as.matrix(xxxx)
+rules <- apriori(xxxx, parameter = list(supp = 0.05, conf = 0.05))
+                 #, parameter = list(supp = 0.1, conf = 0.1))
                  #, parameter = list(supp = 0.001, conf = 0.8))
 itemFrequencyPlot(xxxx,topN=20,type="absolute")
 
 summary(rules)
-options(digits=2)
-inspect(rules[1:5])
+
+options(digits=3)
+inspect(rules[1:14])
 #, parameter = list(supp = 0.001, conf = 0.8))
 
 
