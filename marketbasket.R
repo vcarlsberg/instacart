@@ -1,9 +1,13 @@
 library(tidyverse)
 library(dplyr)
 library(data.table)
+library(rCBA)
+library(arules)
+library(arulesViz)
+library(datasets)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:200000,]
+MyData<-MyData[1:50,]
 #iris_data<-data("iris")
 
 prod_id<-unique(MyData$product_id)
@@ -71,6 +75,16 @@ for (val in ord_id)
   df[counter,aaa_vec]<-1
   df[counter,1]<-val
 }
+
+
+#aaa<-MyData %>% filter(order_id == 2)
+
+xxxx<-df[,2:dim(df)[2]]
+xxxx[is.na(xxxx)] <- 0
+xxxx<-as.matrix(xxxx)
+itemFrequencyPlot(xxxx,topN=20,type="absolute")
+rules <- apriori(xxxx)
+#, parameter = list(supp = 0.001, conf = 0.8))
 
 
 #aaa<-MyData %>% filter(order_id == 1)
