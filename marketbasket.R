@@ -6,9 +6,10 @@ library(arules)
 library(arulesViz)
 library(datasets)
 library(sqldf)
+library(shinythemes)
 
 MyData<-read.csv("order_products__train.csv",sep=",")
-MyData<-MyData[1:1000,]
+MyData<-MyData[1:20000,]
 #iris_data<-data("iris")
 
 MyProducts<-read.csv("products.csv",sep=",")
@@ -89,7 +90,7 @@ for (val in ord_id)
 xxxx<-df[,2:dim(df)[2]]
 xxxx[is.na(xxxx)] <- FALSE
 #xxxx<-as.matrix(xxxx)
-rules <- apriori(xxxx, parameter = list(supp = 0.05, conf = 0.05))
+rules <- apriori(xxxx, parameter = list(supp = 0.02, conf = 0.02))
                  #, parameter = list(supp = 0.1, conf = 0.1))
                  #, parameter = list(supp = 0.001, conf = 0.8))
 itemFrequencyPlot(xxxx,topN=20,type="absolute")
@@ -98,7 +99,22 @@ summary(rules)
 
 options(digits=3)
 inspect(rules[1:14])
+
+plot(rules)
+plotly_arules(rules)
+inspectDT(rules)
+ruleExplorer(rules)
+
+affinity(xxxx)
 #, parameter = list(supp = 0.001, conf = 0.8))
+
+rules_ecl <- eclat(xxxx, parameter = list(supp = 0.02, maxlen = 5))
+ruleExplorer(rules_ecl)
+summary(rules_ecl)
+plot(rules_ecl)
+plotly_arules(rules_ecl)
+inspectDT(rules_ecl)
+ruleExplorer(rules_ecl)
 
 
 #aaa<-MyData %>% filter(order_id == 1)
